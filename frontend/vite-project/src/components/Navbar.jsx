@@ -4,9 +4,9 @@ import {assets} from '../assets/assets'
 const Navbar = () => {
   let[visible,setVisible]= useState(false);
   return (
-    <div  className=' w-full md:w-8/10 m-auto p-5 flex justify-between h-20 '>
+    <div  className=' w-full  p-5 flex justify-between h-20 '>
     <div>
-        <img src={assets.logo}></img>
+        <Link to="/"><img src={assets.logo}></img></Link>
     </div>
     <div className='lg:flex  hidden md:gap-5 lg:gap-10 items-center text-gray-600'>
          <div> 

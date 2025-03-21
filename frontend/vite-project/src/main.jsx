@@ -14,7 +14,9 @@ import Product from './pages/Product.jsx'
 import Contact from './pages/Contact.jsx'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
-createRoot(document.getElementById('root')).render(
+import { ShopContextProvider,shopContext } from './context/shopcontext.jsx'
+createRoot(document.getElementById('root')).render(<ShopContextProvider>
+
 <BrowserRouter>
 <Navbar />
 <Routes>
@@ -30,5 +32,7 @@ createRoot(document.getElementById('root')).render(
      </Routes>
       <Footer />
   </BrowserRouter>
+        </ShopContextProvider>
+
 )
  
