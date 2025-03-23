@@ -28,7 +28,7 @@ createRoot(document.getElementById('root')).render(<ShopContextProvider>
      <Route path='/Login' element={<Login />} />
      <Route path='/Orders' element={<Orders />} />
      <Route path='/Place-order' element={<PlaceOrder />} />
-     <Route path='Product/:id' element={<Product />} />
+     <Route path='products/:id' element={<Product />} />
      </Routes>
       <Footer />
   </BrowserRouter>

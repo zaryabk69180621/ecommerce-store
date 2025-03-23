@@ -1,12 +1,17 @@
 import {React, useState } from 'react'
-import {NavLink,Link} from 'react-router-dom' 
+import {NavLink,Link, useNavigate, useLocation} from 'react-router-dom' 
 import {assets} from '../assets/assets'
+import Searchbar from './Searchbar';
 const Navbar = () => {
+  let[search,setsearch]=useState(false);
   let[visible,setVisible]= useState(false);
+  let nav=useNavigate();
+  let lo=useLocation();
   return (
+    <>
     <div  className=' w-full  p-5 flex justify-between h-20 '>
     <div>
-        <Link to="/"><img src={assets.logo}></img></Link>
+        <Link to="/"><img src={assets.logo} ></img></Link>
     </div>
     <div className='lg:flex  hidden md:gap-5 lg:gap-10 items-center text-gray-600'>
          <div> 
@@ -32,7 +37,11 @@ const Navbar = () => {
           </div>  
             </div> 
      <div className='flex justify-end gap-5 sm:items-center items-end'>
-        <img src={assets.search_icon} className='w-5 h-5 cursor-pointer'  alt="" />
+        <img src={assets.search_icon} onClick={()=>{
+          nav("/Collection")
+          setsearch(true)
+          console.log("done",lo)
+        }} className='w-5 h-5 cursor-pointer'  alt="" />
         <div className='group relative'>
         <img src={assets.profile_icon} className='cursor-pointer w-5 h-5'/>
         <div className='flex   hidden group-hover:block flex-col w-33 bg-slate-100 text-gray-600 justify-between items-center py-5 rounded-lg px-5  justify-between   left-[-120px]  bottom-[-110px] absolute hidden group-hover:block'>
@@ -67,7 +76,11 @@ const Navbar = () => {
         </div>
      </div>  
     </div>
+       {lo.pathname=="/Collection"&&search&&<Searchbar setSearch={setsearch} />}
+    </>
   )
 }
 
 export default Navbar
+
+

@@ -14,6 +14,7 @@ const Sub = () => {
 
           <div>
             <input type="email" required="true"  className='mt-10 w-6/10 h-10 border border-gray-300' /> <input className="  text-sm bg-black text-white py-3 px-12" type="submit" value={"SUBMIT"} /></div>
+ 
           </form>
     </div>
   )

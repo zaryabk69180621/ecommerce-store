@@ -1,10 +1,10 @@
-import  { createContext, useReducer }  from "react" ;
+import  { createContext, useReducer, useState }  from "react" ;
 import {products as p} from "../assets/assets";
 const shopContext= createContext();
 
 
-
  let ShopContextProvider=(props)=>{
+    let [searchVal,setSearchVal]=useState(null);
 
 
     let [products,setproducts]= useReducer((state,action)=>{
@@ -24,7 +24,7 @@ const shopContext= createContext();
         
         },[...p]);
         
-    return <shopContext.Provider value={{products,setproducts}}>
+    return <shopContext.Provider value={{products,setproducts,searchVal,setSearchVal}}>
     {
         props.children
     }

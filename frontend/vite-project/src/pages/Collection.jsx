@@ -14,34 +14,106 @@ const Collection = () => {
   let [middle,setmiddle]=useState(false);
   let[bottom,setbottom]=useState(false);
   let dat=useContext(shopContext);
-
-  useEffect(()=>{
+  let[sortby,setsortby]=useState("relevance");
+  let[search,setsearch]=useState(false);
+  let upstate=()=>{
 
     if(!men&&!Women&&!kids&&!top&&!middle&&!bottom){
       setproducts(dat.products);
       return;
     }
-     let temp= dat.products;
-     if(!top){
+     let temp= products.slice();
+     let subdep=[];
+     let dep=[];
+     if(top){
+      subdep.push("Topwear");
       temp.filter((p)=>{return !p.subCategory =="Topwear"})
      }
-     if(!middle){
-      temp.filter((p)=>{ return !p.subCategory=="Winterwear"})
+     if(middle){
+      subdep.push("Winterwear");
      }
-     if(!bottom){
-      temp.filter((p)=>{ return !p.subCategory=="Bottomwear"})
+     if(bottom){
+      subdep.push("Bottomwear")
      }
-     if(!men)
-      temp=temp.filter(p=>{return p.category!="Men"});
-     if(!Women){
-      temp= temp.filter((p)=>{ return p.category!="Women"})
+     if(men)
+      dep.push("Men")
+     if(Women){
+      dep.push("Women")
      }
-     if(!kids){
-      temp=temp.filter((p)=>{return p.category!="Kids"})
+     if(kids){
+      dep.push("Kids")
+     }
+     console.log("soppppp",subdep,"dep",dep)
+
+     if(subdep.length==0){
+      setproducts((state)=>{return state.slice().filter((p)=>{
+        return dep.includes(p.category);
+
+      })})
+      return ;
+     }
+     if(dep.length==0){
+      setproducts((state)=>{return state.slice().filter((p)=>{
+
+        return subdep.includes(p.subCategory);
+      })})
+      return;
      }
 
+     setproducts((state)=>{return state.slice().filter((p)=>{
 
-  },[men,Women,kids,top,middle,bottom])
+
+        return subdep.includes(p.subCategory)&&dep.includes(p.category);
+
+     })})}
+  useEffect(
+
+upstate
+
+  ,[men,Women,kids,top,middle,bottom])
+  useEffect((state)=>{
+    if(dat.searchVal==""){
+      setproducts(dat.products.slice());upstate()
+    }
+    else if(dat.searchVal!=null){
+    setproducts((state)=>{    
+      let temp=state.slice(); let j=temp.filter((p)=>p.name.toLowerCase().includes(dat.searchVal.toLowerCase()))
+      console.log("*********allback called:",dat.searchVal,"j",j);
+
+      return j;
+    });
+     
+  }
+  },[dat.searchVal])
+  useEffect(()=>{
+    if(sortby=="relevance"){
+      console.log("rel");
+      setproducts(dat.products);
+     
+      return ;
+    }
+    setproducts((state)=>{
+
+      let x;
+      if(sortby=="lowToHigh"){
+        console.log("lth")
+      x=state.slice().sort((a,b)=>{
+          return a.price-b.price;
+        })}
+        
+        if(sortby=="highToLow"){
+          console.log("htl")
+
+          x=state.slice().sort((a,b)=>{
+              return b.price-a.price;
+            })}
+
+        return x;
+ 
+      })
+
+    
+  },[sortby])
   return (
     <div className='flex flex-col sm:flex-row items-start sm:items-start pt-10 gap-1 sm:gap-10 border-t border-gray-200 '>
      
@@ -75,17 +147,17 @@ const Collection = () => {
       <div className='w-full '>
         <div className=' flex justify-between sm:text-2xl  mb-4 '>
           <Title first="ALL" second="COLLECTION" />
-          <select className='text-[17px] bg-gray-100 h-10'>
+          <select onChange={(p)=>{setsortby(p.target.value)}} className='text-[17px] bg-gray-100 h-10'>
 
-<option value=""> SOrt by: Relevance </option>
-<option value=""> SOrt by: Low to High </option>
-            <option value=""> SOrt by: High to Low </option>
+<option value="relevance"> SOrt by: Relevance </option>
+<option value="lowToHigh"> SOrt by: Low to High </option>
+            <option value="highToLow"> SOrt by: High to Low </option>
           </select>
         </div>
         <div className='grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4'>
         {
           products&&products.map((p,index)=>{
-            return <Productitem key={index} _id={p.id} image={p.image} price={p.price}Title={p.Title} />
+            return <Productitem key={index} _id={p._id} image={p.image} price={p.price} title={p.name} />
 
           })        }
       </div>

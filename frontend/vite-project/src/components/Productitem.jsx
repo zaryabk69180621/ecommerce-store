@@ -5,7 +5,6 @@ import { shopContext } from '../context/shopcontext'
 const Productitem = (props) => {
     let data= useContext(shopContext);
 
-    console.log("h",props)
   return (
     <Link to={`/products/${props._id}`}>
         <div className='h-80 overflow-hidden'>
