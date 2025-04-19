@@ -1,9 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { shopContext } from '../context/shopcontext'
 import { assets } from '../assets/assets'
 import Related from '../components/Related'
+import Title from '../components/Title'
  const Product = () => {
+
+      let url=useParams();
     let data=useParams()
     let cont=useContext(shopContext);
     let [product,setproduct]=useState(null);
@@ -16,11 +19,11 @@ import Related from '../components/Related'
       return p._id==data.id
     })[0])
 
-console.log(product)
-  },[])
+    window.scrollTo(0,0)
+  },[url])
   { if(product){
-    return (<div style={{height:"650px"}} className=' h-[800px] sm:h-[1100px] px-5 pt-5 '>
-        <div className=' h-1/1 flex justify sm:justify-center sm:gap-5  flex-wrap '>
+    return (<div  className=' h-[2800px] sm:h-[1200px] px-5 pt-5 '>
+        <div className='  flex justify sm:justify-center sm:gap-5   flex-wrap '>
         <div className='flex flex-row sm:flex-col justify-self-start mx-0 gap-2 order-2 md:order-1 sm:justify-between basis-30 '>
           {
             product.image.map((im,index)=>{ return  <img src={im} onClick={()=>{setimgno(index)}} className={'size-30'+(imgno==index?" opacity-100":" opacity-30")}></img>})
@@ -65,7 +68,7 @@ console.log(product)
 </div>
                         <button  className=' block bg-black text-white text-center w-fit mt-5 py-5 px-7'> Add to Cart</button>
               <hr  className='text-gray-300'/>  
-              <p className='text-gray-400 pr-1/2'>
+              <p className=' hidden sm:block text-gray-400 pr-1/2'>
               100% Original product.
 
 Cash on delivery is available on this product.
@@ -77,8 +80,12 @@ Easy return and exchange policy within 7 days.
           </div>
          
         </div>
-        <Related  category={product.category} subCategory={product.subCategory}/>      
-    
+        <div className='mt-40'>
+          <Title first={"Related"}  second={"Products"}/>
+        </div>
+        <div className='mb-10 '>
+          <Related   category={product.category} subCategory={product.subCategory}/>      
+    </div>
     </div>)}else{
       return <></>
     }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { products } from '../assets/assets'
+import ProductItem from '../components/Productitem'
 const Related = (props) => {
     let prd=products.filter((p)=>{
 
@@ -9,9 +10,11 @@ const Related = (props) => {
     console.log(prd);
 
   return (
-    <div>
+    <div className='block static gap-3 sm:flex'>
         {
-            
+              prd.map((p)=>{
+               return  <ProductItem _id={p._id} title={p.name} price={p.price} image={p.image}  />
+              })
 
         }
 
