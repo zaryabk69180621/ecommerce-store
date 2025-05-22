@@ -18,9 +18,10 @@ import Title from '../components/Title'
     setproduct(cont.products.filter((p)=>{
       return p._id==data.id
     })[0])
-
+    
     window.scrollTo(0,0)
   },[url])
+  useEffect(()=>{product?setSize(product.sizes[0]):""},product)
   { if(product){
     return (<div  className=' h-[2800px] sm:h-[1200px] px-5 pt-5 '>
         <div className='  flex justify sm:justify-center sm:gap-5   flex-wrap '>
@@ -66,7 +67,9 @@ import Title from '../components/Title'
               }
             </div>
 </div>
-                        <button  className=' block bg-black text-white text-center w-fit mt-5 py-5 px-7'> Add to Cart</button>
+                        <button onClick={()=>{
+                          cont.setCartItems({type:"add",payload:{itemId:product.name,size}})
+                        }}  className=' block bg-black text-white text-center w-fit mt-5 py-5 px-7'> Add to Cart</button>
               <hr  className='text-gray-300'/>  
               <p className=' hidden sm:block text-gray-400 pr-1/2'>
               100% Original product.

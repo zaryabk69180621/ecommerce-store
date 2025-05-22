@@ -1,10 +1,40 @@
-import  { createContext, useReducer, useState }  from "react" ;
+import  { createContext, useEffect, useReducer, useState }  from "react" ;
 import {products as p} from "../assets/assets";
 const shopContext= createContext();
 
 
  let ShopContextProvider=(props)=>{
     let [searchVal,setSearchVal]=useState(null);
+
+    let[cartItems,setCartItems]=useReducer((stat,action)=>{
+        let state=stat;
+        if(action.type=="add"){
+            let {itemId, size}=action.payload;
+            console.log("state",stat)
+            if(state[itemId]){
+
+                if(state[itemId][size]){
+
+                         state[itemId][size]+=1;
+                         return state
+
+                }
+                else{
+                     state[itemId][size]=1;
+                return state;
+                    }
+            }else{
+
+                let temp=state;
+                temp[itemId]={};
+                temp[itemId][size]=1
+                return temp
+            }
+
+        }
+
+
+    },{});
 
 
     let [products,setproducts]= useReducer((state,action)=>{
@@ -23,8 +53,12 @@ const shopContext= createContext();
         }
         
         },[...p]);
-        
-    return <shopContext.Provider value={{products,setproducts,searchVal,setSearchVal}}>
+        useEffect(()=>{
+
+
+            console.log(cartItems);
+        },[cartItems])
+    return <shopContext.Provider value={{products,setproducts,searchVal,setSearchVal,cartItems,setCartItems}}>
     {
         props.children
     }
