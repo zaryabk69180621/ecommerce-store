@@ -4,15 +4,8 @@ const shopContext= createContext();
 
 
  let ShopContextProvider=(props)=>{
-
-    useEffect(()=>{
-let data= localStorage.getItem("cart"); let t=JSON.parse(data) ;
-    setCartItems({type:"set",payload:t});
-
-
-    },[])
     let [searchVal,setSearchVal]=useState(null);
-    let [total,setTotal]=useState(0);
+
     let[cartItems,setCartItems]=useReducer((stat,action)=>{
         let state=stat;
         if(action.type=="add"){
@@ -25,15 +18,11 @@ let data= localStorage.getItem("cart"); let t=JSON.parse(data) ;
                 if(state[itemId][size]){
                     let temp={...stat};
                          state[itemId][size]+=1;
-                                 localStorage.setItem("cart",JSON.stringify(temp));
-
                          return temp;
 
                 }
                 else{
                      state[itemId][size]=1;
-                                                      localStorage.setItem("cart",JSON.stringify(state));
-
                 return state;
                     }
             }else{
@@ -41,8 +30,6 @@ let data= localStorage.getItem("cart"); let t=JSON.parse(data) ;
                 let temp=state;
                 temp[itemId]={};
                 temp[itemId][size]=1
-                         localStorage.setItem("cart",JSON.stringify(temp));
-
                 return temp
             }
 
@@ -56,8 +43,7 @@ let data= localStorage.getItem("cart"); let t=JSON.parse(data) ;
                 action.type="remove";
             }else{
                 temp[_id][size]-=1;
-         localStorage.setItem("cart",JSON.stringify(temp));
-                return temp;
+           return temp;
             }
         }
         if(action.type=="remove"){
@@ -71,17 +57,12 @@ let data= localStorage.getItem("cart"); let t=JSON.parse(data) ;
                 else{
                     delete temp[_id];
                 }
-                     localStorage.setItem("cart",JSON.stringify(temp));
-
+            
             return temp
 
             
 
 
-    }
-
-    if(action.type="set"){
-return action.payload;
     }
     },{});
 
@@ -107,7 +88,7 @@ return action.payload;
 
             console.log(cartItems);
         },[cartItems])
-    return (<shopContext.Provider value={{products,setproducts,searchVal,setSearchVal,cartItems,setCartItems,total,setTotal}}>
+    return (<shopContext.Provider value={{products,setproducts,searchVal,setSearchVal,cartItems,setCartItems}}>
     {
         props.children
     }

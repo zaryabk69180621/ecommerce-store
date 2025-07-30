@@ -3,9 +3,8 @@ import Title from '../components/Title'
 import { useContext } from 'react'
 import { shopContext } from '../context/shopcontext'
 import Cartitem from '../components/cartitem'
-import { useNavigate } from 'react-router-dom'
 const Cart = () => {
-let nav= useNavigate();
+
   let con= useContext(shopContext);
   let allitems=con.products;
   console.log("so:",con.cartItems)
@@ -34,7 +33,7 @@ let nav= useNavigate();
         })
         ind*=quantity;
     total+=ind;
-        con.setTotal(total);
+
 
   }):"";
   return (
@@ -64,8 +63,8 @@ let nav= useNavigate();
  <div className='flex justify-between'>
           <div>Sub Total</div><div>{total+100}</div>
         </div>
-         <div className=' cursor-pointer flex justify-center p-2 text-white mt-3 bg-black'>
-          <div onClick={()=>{nav("/Place-order")}} >Checkout</div>
+         <div className='flex justify-center p-2 text-white mt-3 bg-black'>
+          <div>Checkout</div>
         </div>
 
         </div>

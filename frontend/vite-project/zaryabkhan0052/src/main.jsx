@@ -14,13 +14,11 @@ import Product from './pages/Product.jsx'
 import Contact from './pages/Contact.jsx'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
-import Setter from './setter.jsx'
-import { useContext } from 'react'
 import { ShopContextProvider,shopContext } from './context/shopcontext.jsx'
 createRoot(document.getElementById('root')).render(<ShopContextProvider>
+
 <BrowserRouter>
 <Navbar />
-<Setter>
 <Routes>
     <Route path='/' element={<Home />} />
     <Route path='/Cart' element={<Cart />} />
@@ -32,9 +30,7 @@ createRoot(document.getElementById('root')).render(<ShopContextProvider>
      <Route path='/Place-order' element={<PlaceOrder />} />
      <Route path='products/:id' element={<Product />} />
      </Routes>
-      </Setter>
       <Footer />
-
   </BrowserRouter>
         </ShopContextProvider>
 
